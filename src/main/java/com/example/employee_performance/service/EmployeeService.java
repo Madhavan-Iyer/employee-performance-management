@@ -1,15 +1,18 @@
 package com.example.employee_performance.service;
 
 import com.example.employee_performance.dto.EmployeeDetailsDTO;
+import com.example.employee_performance.dto.EmployeeFilteredDTO;
 import com.example.employee_performance.dto.PerformanceReviewDTO;
 import com.example.employee_performance.model.Employee;
+import com.example.employee_performance.model.PerformanceReview;
 import com.example.employee_performance.repository.EmployeeRepository;
 import com.example.employee_performance.repository.PerformanceReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,5 +43,29 @@ public class EmployeeService {
                 }).collect(Collectors.toList());
         dto.setPrevious3Reviews(previous3);
         return dto;
+    }
+
+    public List<EmployeeFilteredDTO> filterEmployees(Integer score, Date reviewDate, List<String> departments, List<String> projects) {
+        List<Employee> employees = employeeRepository.filterEmployees(score, reviewDate, departments, projects);
+
+        return employees.stream().map(e -> {
+                    List<String> projectNames = e.getEmployeeProjects().stream()
+                            .map(ep -> ep.getProject().getName())
+                            .collect(Collectors.toList());
+                    Integer perfScore = e.getPerformanceReviews().stream()
+                            .filter(pr -> {
+                                if (reviewDate == null) {
+                                    return true;
+                                }
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                String dateFromDb = sdf.format(pr.getReviewDate());
+                                String revDate = sdf.format(reviewDate);
+                                return dateFromDb.equals(revDate);
+                            })
+                            .map(PerformanceReview::getScore)
+                            .findFirst().orElse(null);
+
+                    return new EmployeeFilteredDTO(e.getId(), e.getName(), e.getEmail(), e.getDepartment().getName(), projectNames, perfScore){};
+                }).collect(Collectors.toList());
     }
 }

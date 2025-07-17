@@ -25,6 +25,15 @@ public class EmployeeProject {
 
     private String role;
 
+    public EmployeeProject() {}
+
+    public EmployeeProject(Employee employee, Project project, Date assignedDate, String role) {
+        this.employee = employee;
+        this.project = project;
+        this.assignedDate = assignedDate;
+        this.role = role;
+    }
+
     public EmployeeProjectId getId() {
         return id;
     }

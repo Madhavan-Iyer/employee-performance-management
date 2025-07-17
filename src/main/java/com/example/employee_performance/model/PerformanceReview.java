@@ -20,6 +20,15 @@ public class PerformanceReview {
 
     private String reviewComments;
 
+    public PerformanceReview() {}
+
+    public PerformanceReview(Employee employee, Date reviewDate, Integer score, String reviewComments) {
+        this.employee = employee;
+        this.reviewDate = reviewDate;
+        this.score = score;
+        this.reviewComments = reviewComments;
+    }
+
     public Long getId() {
         return id;
     }

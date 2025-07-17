@@ -34,6 +34,17 @@ public class Employee {
     @OneToMany(mappedBy = "employee")
     private Set<EmployeeProject> employeeProjects;
 
+    public Employee() {}
+
+    public Employee(String name, String email, Department department, Date dateOfJoining, Double salary, Employee manager) {
+        this.name = name;
+        this.email = email;
+        this.department = department;
+        this.dateOfJoining = dateOfJoining;
+        this.salary = salary;
+        this.manager = manager;
+    }
+
     public Long getId() {
         return id;
     }

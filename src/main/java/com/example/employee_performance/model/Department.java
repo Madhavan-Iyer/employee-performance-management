@@ -21,6 +21,13 @@ public class Department {
     @OneToMany(mappedBy = "department")
     private Set<Project> projects;
 
+    public Department() {}
+
+    public Department(String name, Double budget) {
+        this.name = name;
+        this.budget = budget;
+    }
+
     public Long getId() {
         return id;
     }

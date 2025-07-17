@@ -24,6 +24,15 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private Set<EmployeeProject> employeeProjects;
 
+    public Project() {}
+
+    public Project(String name, Date startDate, Date endDate, Department department) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.department = department;
+    }
+
     public Long getId() {
         return id;
     }

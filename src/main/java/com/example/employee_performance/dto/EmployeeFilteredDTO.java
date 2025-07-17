@@ -7,16 +7,18 @@ public class EmployeeFilteredDTO {
     private String name;
     private String email;
     private String department;
+    private String dateOfJoining;
     private List<String> projects;
-    private int rating;
+    private String manager;
 
-    public EmployeeFilteredDTO(long id, String name, String email, String department, List<String> projects, int rating) {
+    public EmployeeFilteredDTO(long id, String name, String email, String department, List<String> projects, String dateOfJoining, String manager) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.department = department;
         this.projects = projects;
-        this.rating = rating;
+        this.dateOfJoining = dateOfJoining;
+        this.manager = manager;
     }
 
     public long getId() {
@@ -59,11 +61,19 @@ public class EmployeeFilteredDTO {
         this.projects = projects;
     }
 
-    public int getRating() {
-        return rating;
+    public String getDateOfJoining() {
+        return dateOfJoining;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setDateOfJoining(String dateOfJoining) {
+        this.dateOfJoining = dateOfJoining;
+    }
+
+    public String getManager() {
+        return manager;
+    }
+
+    public void setManager(String manager) {
+        this.manager = manager;
     }
 }

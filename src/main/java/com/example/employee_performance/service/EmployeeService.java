@@ -52,20 +52,7 @@ public class EmployeeService {
                     List<String> projectNames = e.getEmployeeProjects().stream()
                             .map(ep -> ep.getProject().getName())
                             .collect(Collectors.toList());
-                    Integer perfScore = e.getPerformanceReviews().stream()
-                            .filter(pr -> {
-                                if (reviewDate == null) {
-                                    return true;
-                                }
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                                String dateFromDb = sdf.format(pr.getReviewDate());
-                                String revDate = sdf.format(reviewDate);
-                                return dateFromDb.equals(revDate);
-                            })
-                            .map(PerformanceReview::getScore)
-                            .findFirst().orElse(null);
-
-                    return new EmployeeFilteredDTO(e.getId(), e.getName(), e.getEmail(), e.getDepartment().getName(), projectNames, perfScore){};
+                    return new EmployeeFilteredDTO(e.getId(), e.getName(), e.getEmail(), e.getDepartment().getName(), projectNames, e.getDateOfJoining().toString(), e.getManager().getName()){};
                 }).collect(Collectors.toList());
     }
 }

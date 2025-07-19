@@ -2,6 +2,8 @@ package com.example.employee_performance.bootstrap;
 
 import com.example.employee_performance.model.*;
 import com.example.employee_performance.repository.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,7 @@ public class EmployeeDataLoader implements CommandLineRunner {
     private final ProjectRepository projectRepo;
     private final PerformanceReviewRepository reviewRepo;
     private final EmployeeProjectRepository employeeProjectRepo;
+    private static final Logger log = LoggerFactory.getLogger(EmployeeDataLoader.class);
 
     public EmployeeDataLoader(DepartmentRepository departmentRepo,
                               EmployeeRepository employeeRepo,
@@ -90,7 +93,7 @@ public class EmployeeDataLoader implements CommandLineRunner {
             employeeProjectRepo.save(ep4);
         }
 
-        System.out.println("Pre-loaded employee data on start up successfully.");
+        log.info("Pre-loaded employee data on start up successfully.");
     }
 
     private Date date(int year, int month, int day) {

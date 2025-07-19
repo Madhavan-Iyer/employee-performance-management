@@ -3,6 +3,8 @@ package com.example.employee_performance.controller;
 import com.example.employee_performance.dto.EmployeeDetailsDTO;
 import com.example.employee_performance.dto.EmployeeFilteredDTO;
 import com.example.employee_performance.service.EmployeeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
+    private static final Logger log = LoggerFactory.getLogger(EmployeeController.class);
 
     @Autowired
     private EmployeeService employeeService;
@@ -24,7 +27,7 @@ public class EmployeeController {
             EmployeeDetailsDTO detailsDTO = employeeService.getEmployeeDetails(id);
             return ResponseEntity.ok(detailsDTO);
         } catch (Exception exception) {
-            System.out.println("Exception while fetching employee details: " + exception.getMessage());
+            log.error("Exception while fetching employee details: ", exception);
             return ResponseEntity.internalServerError().body("Unexpected error: " + exception.getMessage());
         }
     }
@@ -39,7 +42,7 @@ public class EmployeeController {
             List<EmployeeFilteredDTO> detailsDTOList = employeeService.filterEmployees(score, reviewDate, departments, projects);
             return ResponseEntity.ok(detailsDTOList);
         } catch (Exception exception) {
-            System.out.println("Exception while fetching employee details with filters: " + exception.getMessage());
+            log.error("Exception while fetching employee details with filters: ", exception);
             return ResponseEntity.internalServerError().body("Unexpected error: " + exception.getMessage());
         }
     }
